@@ -1,5 +1,8 @@
 package com.example.mp3.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,19 +19,32 @@ public class Albums {
 
     @ManyToOne
     @JoinColumn(name = "singer_id")
+    @JsonBackReference
     private Singer singer;
 
     @OneToMany(mappedBy = "albums")
+    @JsonManagedReference
     private Set<Song> song;
+
+    @Column(name = "IMAGE")
+    private String image;
 
     public Albums() {
     }
 
-    public Albums(Integer id, String name, Singer singer, Set<Song> song) {
-        this.id = id;
+
+
+    public Albums(String name, Singer singer, Set<Song> song, String image) {
         this.name = name;
         this.singer = singer;
         this.song = song;
+        this.image = image;
+    }
+
+    public Albums(String name, Singer singer, String image) {
+        this.name = name;
+        this.singer = singer;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -62,4 +78,13 @@ public class Albums {
     public void setSong(Set<Song> song) {
         this.song = song;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }
