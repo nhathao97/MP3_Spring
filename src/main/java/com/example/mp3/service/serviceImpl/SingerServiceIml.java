@@ -72,5 +72,10 @@ public class SingerServiceIml implements SingerService {
         singerRepository.save(singer);
     }
 
+    @Override
+    public List<Singer> seachSinger(String singerName) {
+        return singerRepository.findByName(singerName);
+    }
+
 
 }
