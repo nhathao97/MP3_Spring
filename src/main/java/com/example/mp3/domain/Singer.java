@@ -1,5 +1,7 @@
 package com.example.mp3.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.naming.Name;
 import javax.persistence.*;
 import java.util.Set;
@@ -19,9 +21,11 @@ public class Singer {
     private String image;
 
     @OneToMany(mappedBy = "singer")
+    @JsonManagedReference
     private Set<Song> song;
 
     @OneToMany(mappedBy = "singer")
+    @JsonManagedReference
     private Set<Albums> albums;
 
     public Singer() {
