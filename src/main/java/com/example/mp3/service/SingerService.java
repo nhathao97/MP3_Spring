@@ -16,4 +16,5 @@ public interface SingerService {
     Page<Singer> getPageSinger(PageRequest pageRequest);
     void saveSinger(MultipartFile multipartFile, String singerName) throws IOException;
     void updateSinnger(Singer singer);
+    List<Singer> seachSinger(String singerName);
 }
