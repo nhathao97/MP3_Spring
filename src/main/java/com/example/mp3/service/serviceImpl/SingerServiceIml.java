@@ -67,5 +67,10 @@ public class SingerServiceIml implements SingerService {
 
     }
 
+    @Override
+    public void updateSinnger(Singer singer) {
+        singerRepository.save(singer);
+    }
+
 
 }

@@ -15,4 +15,5 @@ public interface SingerService {
     void deleteSinger(Integer singerID);
     Page<Singer> getPageSinger(PageRequest pageRequest);
     void saveSinger(MultipartFile multipartFile, String singerName) throws IOException;
+    void updateSinnger(Singer singer);
 }

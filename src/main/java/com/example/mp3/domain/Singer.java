@@ -92,4 +92,5 @@ public class Singer {
     public void setAlbums(Set<Albums> albums) {
         this.albums = albums;
     }
+
 }

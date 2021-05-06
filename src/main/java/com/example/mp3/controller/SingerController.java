@@ -4,11 +4,8 @@ import com.example.mp3.domain.Singer;
 import com.example.mp3.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +16,14 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api/singer")
 public class SingerController {
-    @Autowired
+     @Autowired
     private SingerService singerService;
 
     @GetMapping("/getAllSinger")
@@ -66,5 +64,33 @@ public class SingerController {
         singerService.deleteSinger(singerID);
         return ResponseEntity.ok().body("Delete Success!!!");
     }
-
+    @PutMapping("/updateSingerWithFile/{singerID}")
+    public ResponseEntity<String> updateSingerWithFile(@RequestParam("id") Integer singerID, @RequestParam("name") String singerName,@RequestParam("file") MultipartFile multipartFile){
+        try {
+            Singer singer = singerService.getSingerByID(singerID);
+            singer.setName(singerName);
+            String fileName = singer.getImage();
+            Path fileOrigin = Paths.get("imageSinger",fileName);
+            singer.setImage(multipartFile.getOriginalFilename());
+            Files.deleteIfExists(fileOrigin);
+            Path path = Paths.get("imageSinger", multipartFile.getOriginalFilename());
+            InputStream inputStream = multipartFile.getInputStream();
+            Files.copy(inputStream,path, StandardCopyOption.REPLACE_EXISTING);
+            singerService.updateSinnger(singer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().body("Update Success");
+    }
+    @PutMapping("/updateSinger/{singerID}")
+    public ResponseEntity<String> updateSinger(@RequestParam("id") Integer singerID,@RequestParam("name") String singerName){
+        try {
+            Singer singer1 = singerService.getSingerByID(singerID);
+            singer1.setName(singerName);
+            singerService.updateSinnger(singer1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().body("Update Success");
+    }
 }
