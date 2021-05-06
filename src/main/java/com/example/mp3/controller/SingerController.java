@@ -93,4 +93,8 @@ public class SingerController {
         }
         return ResponseEntity.ok().body("Update Success");
     }
+    @GetMapping("/searchSinger/{singerName}")
+    public ResponseEntity<List<Singer>> searchSinger(@PathVariable String singerName){
+        return ResponseEntity.ok().body(singerService.seachSinger(singerName));
+    }
 }
