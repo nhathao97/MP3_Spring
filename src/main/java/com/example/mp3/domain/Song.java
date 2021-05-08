@@ -1,5 +1,9 @@
 package com.example.mp3.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,16 +23,20 @@ public class Song {
 
     @ManyToOne
     @JoinColumn(name = "album_id")
+    @JsonBackReference
     private Albums albums;
 
+
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "singer_id")
     private Singer singer;
 
     @Column(name = "IMAGE")
     private String image;
 
-    @OneToMany(mappedBy = "song")
+    @OneToMany(mappedBy = "song" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<PlayLists_Song> playLists_songs;
 
     public Song() {
@@ -50,6 +58,14 @@ public class Song {
         this.albums = albums;
         this.singer = singer;
         this.playLists_songs = playLists_songs;
+        this.image = image;
+    }
+
+    public Song(String name, String fileName, Albums albums, Singer singer, String image) {
+        this.name = name;
+        this.fileName = fileName;
+        this.albums = albums;
+        this.singer = singer;
         this.image = image;
     }
 
@@ -77,11 +93,11 @@ public class Song {
         this.fileName = fileName;
     }
 
-    public Albums getAlbum() {
+    public Albums getAlbums() {
         return albums;
     }
 
-    public void setAlbum(Albums albums) {
+    public void setAlbums(Albums albums) {
         this.albums = albums;
     }
 
@@ -93,19 +109,19 @@ public class Song {
         this.singer = singer;
     }
 
-    public Set<PlayLists_Song> getPlayLists_songs() {
-        return playLists_songs;
-    }
-
-    public void setPlayLists_songs(Set<PlayLists_Song> playLists_songs) {
-        this.playLists_songs = playLists_songs;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<PlayLists_Song> getPlayLists_songs() {
+        return playLists_songs;
+    }
+
+    public void setPlayLists_songs(Set<PlayLists_Song> playLists_songs) {
+        this.playLists_songs = playLists_songs;
     }
 }
