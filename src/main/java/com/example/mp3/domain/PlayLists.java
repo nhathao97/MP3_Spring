@@ -1,5 +1,7 @@
 package com.example.mp3.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,7 +17,8 @@ public class PlayLists {
     private String name;
 
 
-    @OneToMany(mappedBy = "playLists")
+    @OneToMany(mappedBy = "playLists", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<PlayLists_Song> playLists_songs;
 
     public PlayLists() {
