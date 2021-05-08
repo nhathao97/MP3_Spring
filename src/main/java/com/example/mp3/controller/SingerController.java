@@ -64,7 +64,7 @@ public class SingerController {
         singerService.deleteSinger(singerID);
         return ResponseEntity.ok().body("Delete Success!!!");
     }
-    @PutMapping("/updateSingerWithFile/{singerID}")
+    @PutMapping("/updateSingerWithFile")
     public ResponseEntity<String> updateSingerWithFile(@RequestParam("id") Integer singerID, @RequestParam("name") String singerName,@RequestParam("file") MultipartFile multipartFile){
         try {
             Singer singer = singerService.getSingerByID(singerID);
@@ -82,7 +82,7 @@ public class SingerController {
         }
         return ResponseEntity.ok().body("Update Success");
     }
-    @PutMapping("/updateSinger/{singerID}")
+    @PutMapping("/updateSinger")
     public ResponseEntity<String> updateSinger(@RequestParam("id") Integer singerID,@RequestParam("name") String singerName){
         try {
             Singer singer1 = singerService.getSingerByID(singerID);

@@ -20,11 +20,11 @@ public class Singer {
     @Column(name = "IMAGE")
     private String image;
 
-    @OneToMany(mappedBy = "singer")
+    @OneToMany(mappedBy = "singer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Song> song;
 
-    @OneToMany(mappedBy = "singer")
+    @OneToMany(mappedBy = "singer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Albums> albums;
 
